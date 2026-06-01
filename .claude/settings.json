@@ -1,0 +1,61 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(terraform fmt *)",
+      "Bash(terraform validate *)",
+      "Bash(terraform plan *)",
+      "Bash(terraform state list *)",
+      "Bash(terraform state show *)",
+      "Bash(terraform output *)",
+      "Bash(terraform graph *)",
+      "Bash(aws sts get-caller-identity *)",
+      "Bash(aws ecs describe* *)",
+      "Bash(aws ecs list* *)",
+      "Bash(aws rds describe* *)",
+      "Bash(aws cloudwatch get-metric* *)",
+      "Bash(aws cloudwatch describe-alarms *)",
+      "Bash(aws s3 ls *)",
+      "Bash(aws s3 cp s3://* *)",
+      "Bash(aws logs get-log-events *)",
+      "Bash(aws logs filter-log-events *)",
+      "Bash(docker build *)",
+      "Bash(docker images *)",
+      "Bash(docker ps *)",
+      "Bash(kubectl get *)",
+      "Bash(kubectl describe *)",
+      "Bash(kubectl logs *)",
+      "Bash(kubectl top *)",
+      "Bash(helm template *)",
+      "Bash(helm lint *)",
+      "Bash(helm list *)",
+      "Bash(tflint *)",
+      "Bash(checkov *)",
+      "Bash(trivy *)",
+      "Bash(hadolint *)",
+      "Bash(terraform-docs *)"
+    ],
+    "deny": [
+      "Bash(terraform destroy *)",
+      "Bash(terraform apply -auto-approve *)",
+      "Bash(aws iam delete* *)",
+      "Bash(aws ec2 terminate-instances *)",
+      "Bash(aws rds delete* *)",
+      "Bash(aws s3 rb *)",
+      "Bash(rm -rf *)",
+      "Bash(git push --force *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$CLAUDE_FILE\"; if [[ \"$file\" == *.tf ]]; then terraform fmt \"$file\" 2>/dev/null; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
