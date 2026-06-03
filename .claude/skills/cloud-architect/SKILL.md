@@ -12,6 +12,11 @@ metadata:
 
 # Cloud Architect
 
+> **Pipeline role.** This skill powers **Stage 1 (Spec)** of the DevOps pipeline. Co-design the
+> spec interactively via `/spec-architect`, which persists the design to
+> `docs/specs/<name>.spec.md` and stops at human gate G1. Full flow:
+> `knowledge/devops-workflow.md`.
+
 ## Core Workflow
 
 1. **Discovery** — Assess current state, requirements, constraints, compliance needs
