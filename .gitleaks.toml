@@ -1,0 +1,29 @@
+# Secret-scan config — shared by Betterleaks (preferred) and Gitleaks (fallback).
+# Betterleaks is a drop-in for Gitleaks: it reads this same .gitleaks.toml.
+# Copy this file to your repo root as `.gitleaks.toml`.
+
+title = "secret-scan (betterleaks/gitleaks)"
+
+[extend]
+# Start from the tool's built-in ruleset, then narrow with the allowlist below.
+useDefault = true
+
+[allowlist]
+description = "Repo-wide allowlist to cut false positives"
+
+# Files that routinely trip entropy checks but never hold real secrets.
+paths = [
+  '''(.*?)(png|jpg|jpeg|gif|svg|ico|pdf)$''',
+  '''(go\.sum|package-lock\.json|yarn\.lock|pnpm-lock\.yaml|Cargo\.lock)$''',
+  '''\.terraform\.lock\.hcl$''',
+  '''(^|/)docs/diagrams/.*\.drawio$''',
+]
+
+# Placeholder tokens used in this toolkit's templates — not real secrets.
+regexes = [
+  '''<your-[a-z0-9-]+>''',
+  '''EXAMPLE|CHANGEME|REPLACE_ME|dummy|placeholder''',
+]
+
+# To intentionally ignore a specific finding, add its fingerprint to a
+# `.gitleaksignore` file (one fingerprint per line) — both tools honor it.

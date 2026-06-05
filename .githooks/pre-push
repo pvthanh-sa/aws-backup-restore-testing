@@ -1,0 +1,47 @@
+#!/usr/bin/env sh
+# ----------------------------------------------------------------------------
+# Stage 6 — Secret-scan pre-push gate.
+# Blocks `git push` if a secret is detected. Scanner preference:
+#   1) betterleaks binary on PATH   2) gitleaks binary on PATH
+#   3) betterleaks via Docker image (works when no binary is installed)
+# All read .gitleaks.toml. Install: see knowledge/templates/secret-scan/README.md
+# Bypass (you own the risk): git push --no-verify
+# ----------------------------------------------------------------------------
+set -eu
+
+CONFIG_ARG=""
+[ -f .gitleaks.toml ] && CONFIG_ARG="--config .gitleaks.toml"
+BL_IMG="ghcr.io/betterleaks/betterleaks:latest"
+
+# Each scanner uses its native invocation (betterleaks -> `git .`, gitleaks -> `detect`);
+# both scan committed history (what you're about to push). --redact hides secret values.
+# A shell function wraps the call so the multi-word Docker command works under POSIX sh.
+if command -v betterleaks >/dev/null 2>&1; then
+  SCANNER="betterleaks (binary)"
+  run_scan() { betterleaks git . --redact ${CONFIG_ARG}; }
+elif command -v gitleaks >/dev/null 2>&1; then
+  SCANNER="gitleaks (binary)"
+  run_scan() { gitleaks detect --no-banner --redact ${CONFIG_ARG}; }
+elif command -v docker >/dev/null 2>&1 && docker image inspect "$BL_IMG" >/dev/null 2>&1; then
+  SCANNER="betterleaks (docker)"
+  # -u matches host ownership so git inside the container doesn't reject the mounted repo
+  # ("dubious ownership"); the repo is mounted at /repo and .gitleaks.toml resolves there.
+  run_scan() { docker run --rm -u "$(id -u):$(id -g)" -v "$PWD:/repo" -w /repo "$BL_IMG" git . --redact ${CONFIG_ARG}; }
+else
+  echo "❌ secret-scan: no scanner found (no betterleaks/gitleaks binary, no Docker image)."
+  echo "   Install a binary, OR pull the image:  docker pull $BL_IMG"
+  echo "   Bypass (not recommended): git push --no-verify"
+  exit 1
+fi
+
+echo "🔎 secret-scan: scanning repo with ${SCANNER} before push…"
+if run_scan; then
+  echo "✅ secret-scan: no secrets found — push allowed."
+  exit 0
+else
+  echo "❌ secret-scan: potential secret(s) detected — PUSH BLOCKED."
+  echo "   1) Remove the secret from the code/history."
+  echo "   2) If it was a real credential, ROTATE it immediately."
+  echo "   3) False positive? Add its fingerprint to .gitleaksignore."
+  exit 1
+fi
