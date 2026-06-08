@@ -71,9 +71,9 @@ variable "database_subnet_cidrs" {
 }
 
 variable "rds_engine_version" {
-  description = "PostgreSQL engine version for the test RDS (must exist in the target region; 17.2 was removed)."
+  description = "PostgreSQL engine version for the test RDS (must exist in the target region; must be >= the live instance's version since RDS cannot downgrade a minor version)."
   type        = string
-  default     = "17.6"
+  default     = "17.9"
 }
 
 variable "rds_instance_class" {

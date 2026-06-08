@@ -84,9 +84,9 @@ variable "rds_subnet_group_name" {
 }
 
 variable "s3_restore_bucket_name_patterns" {
-  description = "S3 bucket name patterns the S3 validator Lambda is allowed to read (the buckets AWS Backup creates during restore testing). Scopes the validator IAM policy; widen if your restores use different names."
+  description = "S3 bucket name patterns the S3 validator Lambda is allowed to read (the buckets AWS Backup creates during restore testing). AWS names them awsbackup-restore-test-*. Scopes the validator IAM policy; widen if your restores use different names."
   type        = list(string)
-  default     = ["aws-backup-restore-*"]
+  default     = ["awsbackup-restore-*"]
 }
 
 variable "lambda_log_retention_days" {

@@ -68,3 +68,15 @@ secret rotation, default NACL/SG tightening, `enable_rds` default; Low IAM wildc
 endpoints. Several are vendored-module hardening or deliberate spec/lab choices.
 
 **Resulting posture:** 0 Critical, **0 High**, 5 Medium, 7 Low. Effective recommendation: **GO**.
+
+## Runtime follow-up — M1 S3-validator scoping corrected (2026-06-08)
+
+The earlier M1 hardening (scope the S3 validator's `s3:ListBucket`/`GetObject` to the restore-test
+bucket prefix) shipped with the **wrong prefix**: `aws-backup-restore-*`. AWS Backup actually names
+restored buckets `awsbackup-restore-test-*` (no hyphen between "aws" and "backup"). In production this
+caused the S3 validator to fail with `AccessDenied` on `ListObjectsV2` → restore job
+`ValidationStatus = TIMED_OUT` (RDS validation was unaffected — it uses `rds:DescribeDBInstances`,
+unscoped). Confirmed via `aws backup list-restore-jobs` + `/aws/lambda/S3RestoreValidation` logs.
+**Fix:** `s3_restore_bucket_name_patterns` default → `["awsbackup-restore-*"]`
+(`modules/backup-restore-testing/variables.tf`); `terraform validate` ✓. Requires `terraform apply`
+to update the `validator_s3` inline policy; verify next cycle shows `SUCCESSFUL`.

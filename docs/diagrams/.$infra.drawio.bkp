@@ -1,0 +1,187 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="Infrastructure" id="infra-dev-singapore">
+    <mxGraphModel dx="1434" dy="879" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1720" pageHeight="1040" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="AWS Backup Restore Testing — dev-singapore (ap-southeast-1) — two phases: Backup → Restore-testing" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontStyle=1;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="40" y="16" width="1100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cloud" value="AWS Cloud" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="60" width="1720" height="970" as="geometry" />
+        </mxCell>
+        <mxCell id="region" value="ap-southeast-1" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#147EBA;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" parent="cloud" vertex="1">
+          <mxGeometry x="30" y="50" width="1650" height="880" as="geometry" />
+        </mxCell>
+        <mxCell id="account" value="Account 637423473957" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_account;strokeColor=#CD2264;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#CD2264;dashed=0;" parent="region" vertex="1">
+          <mxGeometry x="30" y="40" width="1580" height="800" as="geometry" />
+        </mxCell>
+        <mxCell id="banner1" value="PHASE 1 — Backup (daily 01:00 UTC): resources tagged backup=true → recovery points in the Vault" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontStyle=1;fontSize=12;fontColor=#2E7D32;" parent="account" vertex="1">
+          <mxGeometry x="30" y="20" width="1000" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="divider" value="" style="line;strokeWidth=2;strokeColor=#BDBDBD;dashed=1;html=1;" parent="account" vertex="1">
+          <mxGeometry x="15" y="350" width="1490" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="banner2" value="PHASE 2 — Restore testing + validation (daily 22:00 UTC): restore the latest recovery point, then auto-validate" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontStyle=1;fontSize=12;fontColor=#1565C0;" parent="account" vertex="1">
+          <mxGeometry x="20" y="364" width="360" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="vpc" value="VPC 10.20.0.0/16" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#248814;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#248814;dashed=0;" parent="account" vertex="1">
+          <mxGeometry x="20" y="95" width="290" height="215" as="geometry" />
+        </mxCell>
+        <mxCell id="priv" value="Private DB subnets (az a, az b)" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_private_subnet;strokeColor=#147EBA;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;" parent="vpc" vertex="1">
+          <mxGeometry x="18" y="48" width="254" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="rds" value="RDS PostgreSQL&#xa;(test, backup=true)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#2E27AD;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;" parent="priv" vertex="1">
+          <mxGeometry x="88" y="40" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="S3 test bucket&#xa;(backup=true, 2 objects)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3;" parent="account" vertex="1">
+          <mxGeometry x="340" y="42" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="secrets" value="Secrets Manager&#xa;(RDS creds)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;" parent="account" vertex="1">
+          <mxGeometry x="360" y="225" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="plan" value="AWS Backup plan&#xa;cron 01:00 UTC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E7D32;fontColor=#232F3E;fontSize=11;" parent="account" vertex="1">
+          <mxGeometry x="520" y="130" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="vault" value="Backup vault&#xa;practice (delete_after=2d)&#xa;— shared handoff —" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#F9A825;fontColor=#232F3E;fontSize=11;fontStyle=1;" parent="account" vertex="1">
+          <mxGeometry x="830" y="120" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rtp" value="Restore Testing Plan&#xa;DailyRestorePlan&#xa;cron 22:00 UTC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#1565C0;fontColor=#232F3E;fontSize=11;" parent="account" vertex="1">
+          <mxGeometry x="760" y="400" width="180" height="72" as="geometry" />
+        </mxCell>
+        <mxCell id="restored" value="Temp RDS&#xa;(restored, auto-deleted)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#2E27AD;fontColor=#232F3E;fontSize=11;dashed=1;" parent="account" vertex="1">
+          <mxGeometry x="755" y="560" width="190" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="restored_s3" value="Temp S3&#xa;(restored, auto-deleted)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#7AA116;fontColor=#232F3E;fontSize=11;dashed=1;" parent="account" vertex="1">
+          <mxGeometry x="755" y="624" width="190" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="eb" value="EventBridge&#xa;Backup_restore_testing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#E7157B;fontColor=#232F3E;fontSize=11;" parent="account" vertex="1">
+          <mxGeometry x="1060" y="620" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="coord" value="Coordinator&#xa;Lambda" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="account" vertex="1">
+          <mxGeometry x="1210" y="400" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="vs3" value="S3 Validator&#xa;Lambda" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="account" vertex="1">
+          <mxGeometry x="1440" y="340" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="vrds" value="RDS Validator&#xa;Lambda" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda;" parent="account" vertex="1">
+          <mxGeometry x="1400" y="505" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="cw" value="CloudWatch Logs&#xa;(3 log groups)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;" parent="account" vertex="1">
+          <mxGeometry x="1210" y="220" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="role" value="Backup service role&#xa;(IAM, both phases)" style="sketch=0;points=[[0,0,0],[0.25,0,0],[0.5,0,0],[0.75,0,0],[1,0,0],[0,1,0],[0.25,1,0],[0.5,1,0],[0.75,1,0],[1,1,0],[0,0.25,0],[0,0.5,0],[0,0.75,0],[1,0.25,0],[1,0.5,0],[1,0.75,0]];outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;aspect=fixed;shape=mxgraph.aws4.role;resIcon=mxgraph.aws4.identity_and_access_management_iam;" parent="account" vertex="1">
+          <mxGeometry x="556" y="397" width="78" height="78" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" value="Legend&#xa;━ green ①② = Phase 1 (backup → vault)&#xa;━ blue ③–⑧ = Phase 2 (restore-test → validate)&#xa;- - - dashed = reads / creds / IAM / logs&#xa;Vault (amber) = handoff shared by both phases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;fontColor=#333333;fontSize=10;align=left;spacingLeft=10;verticalAlign=top;spacingTop=8;" parent="account" vertex="1">
+          <mxGeometry x="20" y="600" width="470" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="p1a" value="① backup (tag=true)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#2E7D32;strokeWidth=2;" parent="1" source="rds" target="plan" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p1b" value="①" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#2E7D32;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" parent="1" source="s3" target="plan" edge="1">
+          <mxGeometry x="-0.2743" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="695" y="231" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2" value="② store recovery point" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#2E7D32;strokeWidth=2;" parent="1" source="plan" target="vault" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="③ recovery points" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="vault" target="rtp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="④ restore (RDS)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="rtp" target="restored" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p4b" value="④ restore (S3)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="rtp" target="restored_s3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="900" y="630" />
+              <mxPoint x="820" y="630" />
+              <mxPoint x="820" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p5" value="⑤ COMPLETED" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="restored" target="eb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p5b" value="⑤ COMPLETED" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="restored_s3" target="eb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p6" value="⑥ invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="eb" target="coord" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1270" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p7a" value="⑦ sync invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="coord" target="vs3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1464" y="589" />
+              <mxPoint x="1464" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p7b" value="⑦ sync invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="coord" target="vrds" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1520" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p8a" value="⑧ PutRestoreValidationResult" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="vs3" target="rtp" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p8b" value="⑧" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;strokeColor=#1E88E5;strokeWidth=2;" parent="1" source="vrds" target="rtp" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1000" y="694" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dx1" value="creds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;dashed=1;strokeColor=#888888;" parent="1" source="rds" target="secrets" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dx2" value="reads" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;dashed=1;strokeColor=#888888;" parent="1" source="vs3" target="restored_s3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1630" y="530" />
+              <mxPoint x="1630" y="900" />
+              <mxPoint x="920" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dx3" value="reads" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;dashed=1;strokeColor=#888888;" parent="1" source="vrds" target="restored" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1539" y="880" />
+              <mxPoint x="950" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dx4" value="logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;dashed=1;strokeColor=#888888;" parent="1" source="coord" target="cw" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dx5" value="assumed (backup)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;dashed=1;strokeColor=#888888;" parent="1" source="role" target="plan" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="695" y="530" />
+              <mxPoint x="695" y="530" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dx6" value="assumed (restore-test)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=10;dashed=1;strokeColor=#888888;" parent="1" source="role" target="rtp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
