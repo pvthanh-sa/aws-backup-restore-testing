@@ -42,6 +42,10 @@ module "rds" {
   engine_version = var.rds_engine_version
   instance_class = var.rds_instance_class
 
+  # Keep Terraform authoritative over the version: AWS must not auto-bump the
+  # minor (that caused a 17.6→17.9 drift + an impossible downgrade plan).
+  auto_minor_version_upgrade = false
+
   storage_encrypted = true
   multi_az          = false
 

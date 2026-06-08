@@ -119,6 +119,10 @@ fabric.properties
 # Partial backend configs — contain account-specific bucket/region/profile
 backend-*.hcl
 
+# Python bytecode (e.g. from local py_compile of the Lambda handlers)
+__pycache__/
+*.pyc
+
 # Local .terraform directories
 **/.terraform/*
 
@@ -189,4 +193,4 @@ runtime-exports.generated.sh
 !**/.env.example
 
 # Ignore mcp configuration
-.mcp.json
+*.drawio.bkp
