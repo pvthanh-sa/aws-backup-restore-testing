@@ -75,7 +75,7 @@ jobs:
       # 5) Misconfig scanner #2 — Trivy config (tfsec successor). THIS is the blocking gate:
       #    fails the run on HIGH/CRITICAL misconfig. Different ruleset than Checkov → wider coverage.
       - name: Trivy config
-        uses: aquasecurity/trivy-action@0.28.0   # pin; check github.com/aquasecurity/trivy-action/releases
+        uses: aquasecurity/trivy-action@v0.36.0   # tags are v-prefixed; bump from github.com/aquasecurity/trivy-action/releases
         with:
           scan-type: config
           scan-ref: .
