@@ -194,3 +194,4 @@ runtime-exports.generated.sh
 
 # Ignore mcp configuration
 *.drawio.bkp
+*.bkp
