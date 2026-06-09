@@ -1,0 +1,99 @@
+# Terraform IaC security gate (CI — defense-in-depth Layer 3).
+# Copy to .github/workflows/iac-scan.yml. Mirrors the local gate run at /iac-implement (G3) so
+# nothing merges unscanned even if the local flow is skipped. Runs on PRs/pushes touching Terraform:
+#   fmt → validate → tflint → Checkov (report) → Trivy config (blocking on HIGH/CRITICAL).
+# Findings surface in PR checks and the repo Security tab (SARIF).
+name: IaC Scan
+
+on:
+  pull_request:
+    paths: ['**/*.tf', '**/*.tfvars', '**/*.hcl', '.github/workflows/iac-scan.yml']
+  push:
+    branches: [main]
+    paths: ['**/*.tf', '**/*.tfvars', '**/*.hcl']
+
+permissions:
+  contents: read
+  security-events: write   # required to upload SARIF to the Security tab
+
+concurrency:                 # CI is safe to cancel when new commits arrive
+  group: iac-scan-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  iac-scan:
+    name: fmt / validate / lint / misconfig
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      # 1) Format — fail if any .tf isn't canonically formatted.
+      - name: terraform fmt
+        run: terraform fmt -check -recursive -diff
+
+      # 2) Validate ROOT configs only — dirs with a provider/backend block (no state access needed).
+      #    Child modules under modules/ are validated transitively by the roots that call them;
+      #    validating a module as a standalone root throws false errors (e.g. "output refers to
+      #    sensitive values", or missing provider configuration_aliases).
+      - name: terraform validate (roots)
+        run: |
+          set -e
+          roots=$(grep -rlE '^[[:space:]]*(provider[[:space:]]+"|backend[[:space:]]+")' --include='*.tf' . \
+                  | grep -v '/\.terraform/' | xargs -r -n1 dirname | sort -u)
+          [ -z "$roots" ] && { echo "no root configs found — skipping validate"; exit 0; }
+          for d in $roots; do
+            echo "::group::validate $d"
+            terraform -chdir="$d" init -backend=false -input=false >/dev/null
+            terraform -chdir="$d" validate
+            echo "::endgroup::"
+          done
+
+      # 3) Lint (loads .tflint.hcl plugins if present). Warnings are printed but only ERRORS block
+      #    the gate — `terraform_unused_declarations` etc. are too noisy to fail a build on.
+      - name: Setup tflint
+        uses: terraform-linters/setup-tflint@v4
+      - name: tflint
+        run: |
+          tflint --init || true
+          tflint --recursive --format compact --minimum-failure-severity=error
+
+      # 4) Misconfig scanner #1 — Checkov (policy-as-code, 1000+ rules).
+      #    Runs in REPORT mode (Checkov CE has no severity threshold, so blocking on every rule
+      #    is too noisy). All findings still go to the Security tab. To make it blocking, drop
+      #    --soft-fail (and curate a .checkov.yaml skip-list).
+      - name: Checkov
+        run: |
+          pip install --quiet checkov
+          checkov -d . --framework terraform --quiet --compact \
+            -o cli -o sarif --output-file-path console,checkov.sarif --soft-fail
+
+      # 5) Misconfig scanner #2 — Trivy config (tfsec successor). THIS is the blocking gate:
+      #    fails the run on HIGH/CRITICAL misconfig. Different ruleset than Checkov → wider coverage.
+      - name: Trivy config
+        uses: aquasecurity/trivy-action@0.28.0   # pin; check github.com/aquasecurity/trivy-action/releases
+        with:
+          scan-type: config
+          scan-ref: .
+          format: sarif
+          output: trivy.sarif
+          severity: CRITICAL,HIGH
+          exit-code: '1'
+
+      # 6) Publish both reports to the Security tab (even when a scan failed).
+      - name: Upload Checkov SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: checkov.sarif
+          category: checkov
+      - name: Upload Trivy SARIF
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy.sarif
+          category: trivy-config

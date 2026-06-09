@@ -1,0 +1,4 @@
+# Accepted findings (each must have a reason). Remove a line to re-enable that check.
+# AWS-0132: dev lab encrypts S3 with SSE-S3 (AES256), not a customer-managed KMS key.
+#   Documented in docs/infrastructure.md §7 + review report. Remove to enforce SSE-KMS/CMK.
+AWS-0132
