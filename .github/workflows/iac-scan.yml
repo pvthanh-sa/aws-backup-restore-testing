@@ -82,7 +82,10 @@ jobs:
           format: sarif
           output: trivy.sarif
           severity: CRITICAL,HIGH
-          exit-code: '1'
+          limit-severities-for-sarif: true   # REQUIRED: else SARIF mode scans ALL severities and
+                                              # exit-code fires on MEDIUM/LOW too. This makes `severity`
+                                              # apply to the scan, so only HIGH/CRITICAL block.
+          exit-code: '1'                      # (.trivyignore at repo root is read automatically)
 
       # 6) Publish both reports to the Security tab (even when a scan failed).
       - name: Upload Checkov SARIF
