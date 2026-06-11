@@ -177,6 +177,9 @@ terraform.rc
 # All .claude files (contains tokens / profile info)
 .claude
 
+# Claude project config (contains project-specific settings)
+CLAUDE.md
+
 # Runtime exports from `environments/tokyo-dev-single/SETUP-CLI-EN.md` (contains runtime secrets)
 runtime-exports.generated.sh
 
